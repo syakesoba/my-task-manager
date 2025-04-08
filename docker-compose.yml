@@ -11,5 +11,7 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    volumes:
+      - ./src:/app/src  # ローカルのsrcをコンテナの/app/srcにマウント
     depends_on:
       - backend
