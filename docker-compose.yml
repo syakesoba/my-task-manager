@@ -6,6 +6,8 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=production
+    depends_on:
+      - mongodb  # MongoDBをバックエンドの依存関係として追加
 
   frontend:
     build: ./frontend
@@ -15,3 +17,18 @@ services:
       - ./src:/app/src  # ローカルのsrcをコンテナの/app/srcにマウント
     depends_on:
       - backend
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    restart: always
+
+volumes:
+  mongo_data:

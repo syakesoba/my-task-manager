@@ -29,6 +29,8 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    implementation("org.litote.kmongo:kmongo:4.9.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
