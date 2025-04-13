@@ -1,4 +1,13 @@
+server:
+  port: 8080
+
 spring:
   data:
-    mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI}
+    mongo:
+      uri: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/taskmanager"
+
+  web:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "GET,POST,PUT,DELETE"
+      allowed-headers: "*"

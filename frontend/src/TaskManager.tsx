@@ -12,7 +12,9 @@ const TaskManager = () => {
   const [newTask, setNewTask] = useState({ title: "", description: "" });
 
   useEffect(() => {
-    getTasks().then(setTasks);
+    getTasks().then(setTasks).catch((error) => {
+        console.error("Failed to fetch tasks:", error);
+      });
   }, []);
 
   const handleCreateTask = async () => {

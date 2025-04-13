@@ -1,13 +1,21 @@
-version: '3'
+networks:
+  app-network:
+    driver: bridge
 services:
   backend:
     build: ./backend
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=production
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
+      SPRING_DATA_MONGODB_URI: "mongodb://admin:password@mongo:27017/taskmanager"
+
     depends_on:
-      - mongodb  # MongoDBをバックエンドの依存関係として追加
+      mongo:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: always
 
   frontend:
     build: ./frontend
@@ -17,18 +25,28 @@ services:
       - ./src:/app/src  # ローカルのsrcをコンテナの/app/srcにマウント
     depends_on:
       - backend
+    networks:
+      - app-network
+    restart: always
 
-  mongodb:
+  mongo:
     image: mongo:latest
-    container_name: mongodb
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    networks:
+      - app-network
     restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 
 volumes:
   mongo_data:

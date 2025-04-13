@@ -2,7 +2,8 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/tasks")
+@CrossOrigin(origins = ["http://localhost:3000"])
 class TaskController(private val taskService: TaskService) {
 
     @GetMapping
