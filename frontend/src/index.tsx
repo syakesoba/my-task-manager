@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import TaskManager from "./TaskManager";
+import './styles/index.css';
+import TaskManager from "./components/TaskManager";
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(

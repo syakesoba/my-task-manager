@@ -1,3 +1,5 @@
+package org.example.taskmanager
+
 import org.springframework.stereotype.Service
 
 @Service

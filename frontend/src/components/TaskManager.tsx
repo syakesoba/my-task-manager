@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getTasks, createTask, deleteTask } from "./services/api";
+import { getTasks, createTask, deleteTask } from "../services/api";
+import "./TaskManager.css";
 
 type Task = {
   id: string;
@@ -28,24 +29,28 @@ const TaskManager = () => {
   };
 
   return (
-    <div>
+    <div className="task-manager">
       <h2>Task Manager</h2>
-      <input
-        type="text"
-        placeholder="Title"
-        onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Description"
-        onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-      />
-      <button onClick={handleCreateTask}>Add Task</button>
-      <ul>
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Title"
+          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Description"
+          onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+        />
+        <button onClick={handleCreateTask}>Add Task</button>
+      </div>
+      <ul className="task-list">
         {tasks.map((task) => (
-          <li key={task.id}>
+          <li className="task-card" key={task.id}>
             {task.title} - {task.description}
-            <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+            <button className="delete-button" onClick={() => handleDeleteTask(task.id)}>
+              Delete
+            </button>
           </li>
         ))}
       </ul>
